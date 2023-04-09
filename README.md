@@ -14,7 +14,8 @@ N/A
 
 This site provides a button which upon pressing leads to a series of prompts. Upon answering the prompts, the site generates a password.
 
-![Password Generator](/develop/pwdgenerator.png)
+![Password Generator](Develop/pwdgenerator.png)
+
 
 
 ## License
