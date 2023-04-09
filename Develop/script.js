@@ -71,6 +71,8 @@ var selectCharacter = function() {
 
 // Write password to the #password input
 function writePassword() {
+//reset password array if existing content is there
+  password=[];
   //check for user inputs
   var upperCasePromptValue = useUpperCase();
   var lowerCasePromptValue = useLowerCase();
