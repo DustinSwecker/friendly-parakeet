@@ -9,58 +9,98 @@ var symbols = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-",
 
 var numbers = [0,1,2,3,4,5,6,7,8,9];
 
+// Get references to the #generate element
+var generateBtn = document.querySelector("#generate");
+
+//empty array to be used to set up the chosen character list
+var toUse = [];
+
+//empty array to hold the password generated
+var password =[];
+
+//create functions to prompt for inputs and add to the character list if selected
+var useUpperCase = function() {
+  var upperCase = prompt("Use upper case in password? 'Ok' for 'Yes', 'Cancel' for 'No'", "Yes");
+  if(upperCase === "Yes") {
+    toUse.push(upperCaseLetters);
+  }  return upperCase;
+};
+
+var useLowerCase = function() {
+  var lowerCase = prompt ("Use lower case in password? 'Ok' for 'Yes', 'Cancel' for 'No'", "Yes");
+  if (lowerCase === "Yes"){
+    toUse.push(lowerCaseLetters);
+  }  return lowerCase;
+};
+
+var useSymbols = function() {
+  var toSymbols = prompt("Use symbols in password? 'Ok' for 'Yes', 'Cancel' for 'No'", "Yes");
+  if (toSymbols === "Yes") {
+  toUse.push(symbols);
+  } return toSymbols;
+};
+
+var useNumbers = function() {
+  var toNumbers = prompt("Use numbers in password? 'Ok' for 'Yes', 'Cancel' for 'No'", "Yes");
+  if(toNumbers === "Yes") {
+    toUse.push(numbers);
+  }  return toNumbers;
+};
+
+var passwordLength = function () {
+  var pwL = prompt("Length of password (between 8 and 128)?");
+  return pwL;
+};
+
+//function to select a character from the generated nested arrays within the toUse array and then push to the password array
+
+var selectCharacter = function() {
+  var randomArrayFromToUse = toUse[Math.floor(Math.random()*toUse.length)];
+  
+    if (randomArrayFromToUse === upperCaseLetters) {
+        password.push(randomArrayFromToUse[Math.floor(Math.random()*upperCaseLetters.length)]);
+    } else if (randomArrayFromToUse === lowerCaseLetters) {
+      password.push(randomArrayFromToUse[Math.floor(Math.random()*lowerCaseLetters.length)]);
+    } else if (randomArrayFromToUse===symbols) {
+      password.push(randomArrayFromToUse[Math.floor(Math.random()*symbols.length)]);
+    } else if (randomArrayFromToUse === numbers) {
+      password.push(randomArrayFromToUse[Math.floor(Math.random()*numbers.length)]);
+    }; return;
+  };
+
+
 // Write password to the #password input
 function writePassword() {
   //check for user inputs
-  var useUpperCase = prompt("Use upper case in password? 'Ok' for 'Yes', 'Cancel' for 'No'", "Yes");
-  var useLowerCase = prompt("Use lower case in password? 'Ok' for 'Yes', 'Cancel' for 'No'", "Yes");
-  var useSymbols = prompt("Use symbols in password? 'Ok' for 'Yes', 'Cancel' for 'No'", "Yes");
-  var useNumbers = prompt("Use symbols in password? 'Ok' for 'Yes', 'Cancel' for 'No'", "Yes");
-  var passwordLength = prompt("Length of password (between 8 and 128)?");
-  //verify password length is within accepted parameters
-  if (passwordLength >=8 && passwordLength <=128) {
+  var upperCasePromptValue = useUpperCase();
+  var lowerCasePromptValue = useLowerCase();
+  var symbolsValue = useSymbols();
+  var numbersValue = useNumbers();
+  var passwordLength2 = passwordLength();
 
+ //ensure that at least one character type was selected
+  if (lowerCasePromptValue === null && upperCasePromptValue === null && symbolsValue === null && numbersValue === null) {
+    alert("Please select at least one character type to include in your password");
+    //verify password length is within accepted parameters  
+  } else if (passwordLength2 >=8 && passwordLength2 <=128) { 
     
-    //functionality to create the list of characters to use in the password
-      var toUse = [];
-      if(useUpperCase === "Yes") {
-        toUse.concat(upperCaseLetters);
-      }; 
-    
-      if (useLowerCase === "Yes") {
-        toUse.concat(lowerCaseLetters);
-      };
-    
-      if (useSymbols === "Yes") {
-        toUse.concat(symbols);
-      };
-    
-      if (useNumbers === "Yes") {
-        toUse.concat(numbers);
-      };
+        
+  //create a value for each character as set by the passwordLength function and add it to the password array
 
-    console.log(toUse);
+    for (var i = 0; i<passwordLength2; i++) {
 
-    var password =[];
-
-    for (var i = 0; i<=passwordLength; i++) {
-      //adding randomized elements based on input on passwordLength from the toUse array to a password
-      password.push(toUse[(Math.floor(Math.random*toUse.length))]);
+      selectCharacter();
+            
     };
-    document.getElementById("#password").innerHTML=password.toString();
 
+    var passwordInput = password.join('');
+    document.getElementById("password").textContent = passwordInput;
   } else {
     alert ("Please select a password length between 8 and 128");
   };
 };
-// Get references to the #generate element
-var generateBtn = document.querySelector("#generate");
 
 // Add event listener to generate button
  generateBtn.addEventListener("click", writePassword);
 
- 
-
-
- 
  
