@@ -97,6 +97,7 @@ function writePassword() {
 
     var passwordInput = password.join('');
     document.getElementById("password").textContent = passwordInput;
+    toUse=[];
   } else {
     alert ("Please select a password length between 8 and 128");
   };
